@@ -3,7 +3,9 @@ package kr.co.skb.agent.communication;
 import kr.co.skb.agent.device.KickboardLocation;
 import kr.co.skb.agent.device.KickboardUse;
 import kr.co.skb.agent.util.Kickboard;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CommunicationUtilImpl implements CommunicationUtil {
     @Override
     public boolean request(Kickboard kickboard) {
