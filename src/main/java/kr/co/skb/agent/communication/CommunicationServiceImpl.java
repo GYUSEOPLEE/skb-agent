@@ -1,10 +1,10 @@
 package kr.co.skb.agent.communication;
 
 import kr.co.skb.agent.device.AgentService;
-import kr.co.skb.agent.device.KickboardLocation;
-import kr.co.skb.agent.device.KickboardUse;
+import kr.co.skb.agent.domain.KickboardLocation;
+import kr.co.skb.agent.domain.KickboardUse;
 import kr.co.skb.agent.util.CommunicationUtil;
-import kr.co.skb.agent.util.Kickboard;
+import kr.co.skb.agent.domain.Kickboard;
 import kr.co.skb.agent.util.KickboardUtil;
 import kr.co.skb.agent.util.LocationValidator;
 import lombok.extern.log4j.Log4j2;
@@ -16,12 +16,9 @@ import java.time.LocalDateTime;
 @Log4j2
 @Service
 public class CommunicationServiceImpl implements CommunicationService {
-    @Autowired
-    private KickboardUtil kickboardUtil;
-    @Autowired
-    private CommunicationUtil communicationUtil;
-    @Autowired
-    private AgentService agentService;
+    @Autowired private KickboardUtil kickboardUtil;
+    @Autowired private CommunicationUtil communicationUtil;
+    @Autowired private AgentService agentService;
 
     private String kickboardUse = "N";
 
@@ -29,8 +26,9 @@ public class CommunicationServiceImpl implements CommunicationService {
     public void sendKickboard() throws Exception {
         final Kickboard kickboard = kickboardUtil.getKickboard();
 
-        if (kickboardUtil.isEmpty(kickboard)) {
+        if (kickboard.isEmpty(kickboard)) {
             log.debug("킥보드 정보 조회 실패");
+
             return;
         }
 
@@ -44,8 +42,8 @@ public class CommunicationServiceImpl implements CommunicationService {
 
     @Override
     public void sendKickboardUse() throws Exception {
-        final KickboardUse kickboardUse = agentService.checkKickboardUse();
-        if (!this.kickboardUse.equalsIgnoreCase(kickboardUse.getUse())) {
+        KickboardUse kickboardUse = agentService.checkKickboardUse();
+        if (this.kickboardUse.equalsIgnoreCase(kickboardUse.getUse())) {
             log.debug("킥보드 사용 정보가 변경되지 않음");
 
             return;
@@ -57,7 +55,7 @@ public class CommunicationServiceImpl implements CommunicationService {
             communicationUtil.request(kickboardUse);
         } catch (Exception e) {
             log.error("킥보드 사용 정보 송신 실패");
-            log.error(e.getStackTrace());
+            e.printStackTrace();
         }
     }
 
