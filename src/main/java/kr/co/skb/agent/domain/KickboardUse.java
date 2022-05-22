@@ -1,11 +1,10 @@
-package kr.co.skb.agent.device;
+package kr.co.skb.agent.domain;
 
 import lombok.*;
 
 import java.io.Serializable;
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString

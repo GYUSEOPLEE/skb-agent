@@ -1,12 +1,11 @@
-package kr.co.skb.agent.device;
+package kr.co.skb.agent.domain;
 
 import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
