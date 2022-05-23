@@ -4,22 +4,25 @@ import lombok.*;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 public interface RequestInfo {
-    @Getter @Setter
+    @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    @ToString
     @Component
     @ConfigurationProperties("ip")
-    public class Ip {
+    public class Ip implements Serializable {
         private String system;
         private String helmet;
     }
 
-    @Getter @Setter
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     @Component
     @ConfigurationProperties("url")
-    public class Url {
+    public class Url implements Serializable {
         private String info;
         private String use;
         private String location;

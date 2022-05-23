@@ -17,9 +17,27 @@ class SkbAgentUtilTests {
     @Autowired CommunicationService communicationService;
 
     @Test
-    public void test() throws Exception {
+    public void sendKickboard() throws Exception {
+        try {
+            communicationService.sendKickboard();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void sendKickboardUse() throws Exception {
         try {
             communicationService.sendKickboardUse();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void sendKickboardLocation() throws Exception {
+        try {
+            communicationService.sendKickboardLocation();
         } catch (Exception e) {
             e.printStackTrace();
         }
