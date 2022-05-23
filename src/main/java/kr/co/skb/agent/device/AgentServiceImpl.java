@@ -6,6 +6,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Log4j2
 @Service
 @Scope("prototype")
@@ -18,7 +20,9 @@ public class AgentServiceImpl implements AgentService, Runnable {
 
     @Override
     public KickboardLocation checkKickboardLocation() {
-        return null;
+        // TODO: 센서 확인
+        return new KickboardLocation("KB202205050001",
+                LocalDateTime.now(), 37.4420792, 127.1363692);
     }
 
     @Override
