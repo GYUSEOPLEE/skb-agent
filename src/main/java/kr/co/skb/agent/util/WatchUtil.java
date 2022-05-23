@@ -37,12 +37,12 @@ public class WatchUtil implements Runnable {
                 }
             }
         } catch (Exception e) {
-            log.error(e.getStackTrace());
+            log.error(e.getMessage());
         } finally {
             try {
                 watchService.close();
             } catch (Exception e) {
-                log.error(e.getStackTrace());
+                log.error(e.getMessage());
             }
         }
     }

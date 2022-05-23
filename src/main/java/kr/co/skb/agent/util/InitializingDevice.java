@@ -16,10 +16,10 @@ public class InitializingDevice implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         for (int i = 0; i < 5; i++) {
             try {
-//                communicationService.sendKickboard();
+                communicationService.sendKickboard();
                 break;
             } catch (Exception e) {
-                log.error("킥보드 정보 송신 실패  " + i + "/" + (5 - i));
+                log.error("킥보드 정보 송신 실패  " + i + "/" + 5);
                 Thread.sleep(1000);
             }
         }
