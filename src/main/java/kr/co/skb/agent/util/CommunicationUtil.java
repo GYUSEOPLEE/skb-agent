@@ -27,7 +27,7 @@ public class CommunicationUtil {
 
     // 킥보드 정보 송신
     public boolean request(@Valid final Kickboard kickboard)
-            throws IOException, JSONException, Exception {
+            throws IOException, ConstraintViolationException, JSONException {
         try {
             String requestUrl = "http://" + ip.getSystem() + url.getInfo();
             JSONObject code = new JSONObject(request(kickboard, requestUrl).string());
@@ -36,13 +36,13 @@ public class CommunicationUtil {
             return "200".equals(code.getString("code"));
         } catch (ConstraintViolationException e) {
             log.error("킥보드 정보가 존재하지 않음");
-            throw new Exception();
+            throw e;
         }
     }
 
     // 킥보드 사용 정보 송신
     public boolean request(@Valid final KickboardUse kickboardUse)
-            throws IOException, JSONException, Exception {
+            throws IOException, ConstraintViolationException, JSONException {
         try {
             String requestUrl = "http://" + ip.getHelmet() + url.getUse();
             JSONObject code = new JSONObject(request(kickboardUse, requestUrl).string());
@@ -51,13 +51,13 @@ public class CommunicationUtil {
             return "200".equals(code.getString("code"));
         } catch (ConstraintViolationException e) {
             log.error("킥보드 사용 정보가 존재하지 않음");
-            throw new Exception();
+            throw e;
         }
     }
     
     // 킥보드 위치 정보 송신
     public boolean request(@Valid final KickboardLocation kickboardLocation)
-            throws IOException, JSONException, Exception {
+            throws IOException, ConstraintViolationException, JSONException {
         try {
             String requestUrl = "http://" + ip.getSystem() + url.getLocation();
             JSONObject code = new JSONObject(request(kickboardLocation, requestUrl).string());
@@ -66,7 +66,7 @@ public class CommunicationUtil {
             return "200".equals(code.getString("code"));
         } catch (ConstraintViolationException e) {
             log.error("킥보드 위치 정보가 존재하지 않음");
-            throw new Exception();
+            throw e;
         }
     }
 
