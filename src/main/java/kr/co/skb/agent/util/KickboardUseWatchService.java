@@ -8,7 +8,7 @@ import java.util.List;
 
 public class KickboardUseWatchService {
     final static String file = "/home/pi/Desktop/kickboard/KickboardUse.txt";
-    private void kickboardStartSend(){
+    public void kickboardStartSend(){
         WatchService watchService = null;
         StringBuffer buffer = new StringBuffer();
 

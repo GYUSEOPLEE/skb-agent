@@ -1,6 +1,7 @@
 package kr.co.skb.agent.deamon;
 
 import kr.co.skb.agent.util.KickboardUseUtil;
+import kr.co.skb.agent.util.KickboardUseWatchService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -9,18 +10,28 @@ import javax.servlet.annotation.WebListener;
 
 @WebListener
 public class DeamonListener implements ServletContextListener, Runnable {
-    private Thread thread;
+    private Thread StartThread;
+    private Thread StartWatchThread;
     private boolean isShutdown = false;
     private ServletContext sc;
     private KickboardUseUtil kickboardUseUtil;
+    private KickboardUseWatchService kickboardUseWatchService;
 
     public void startDaemon() {
-        if(thread == null) {
-            thread = new Thread(this, "Deamon thread");
+        if(StartThread == null) {
+            StartThread = new Thread(this, "Deamon StartThread");
         }
 
-        if(!thread.isAlive()) {
-            thread.start();
+        if(StartWatchThread == null) {
+            StartWatchThread = new Thread(this, "Deamon StartWatchThread");
+        }
+
+        if(!StartThread.isAlive()) {
+            StartThread.start();
+        }
+
+        if(!StartWatchThread.isAlive()) {
+            StartWatchThread.start();
         }
     }
 
@@ -28,22 +39,27 @@ public class DeamonListener implements ServletContextListener, Runnable {
     public void run() {
         Thread currentThread = Thread.currentThread();
 
-        while (currentThread == thread && !this.isShutdown) {
+        while (!this.isShutdown) {
             kickboardUseUtil.kickboardUse();
+            kickboardUseWatchService.kickboardStartSend();
         }
     }
 
+    @Override
     public void contextInitialized (ServletContextEvent event) {
         sc = event.getServletContext();
         startDaemon();
     }
 
+    @Override
     public void contextDestroyed (ServletContextEvent event) {
         this.isShutdown = true;
         try
         {
-            thread.join();
-            thread = null;
+            StartThread.join();
+            StartThread = null;
+            StartWatchThread.join();
+            StartWatchThread = null;
         }
         catch (InterruptedException ie)
         {
