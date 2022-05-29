@@ -35,9 +35,9 @@ public class CommunicationServiceImpl implements CommunicationService {
     }
 
     @Override
-    public void sendKickboardUse() throws Exception {
-        final KickboardUse kickboardUse = agentService.checkKickboardUse();
-        if (this.kickboardUse.equalsIgnoreCase(kickboardUse.getUse())) {
+    public void sendKickboardUse(String use) throws Exception {
+        final KickboardUse kickboardUse = agentService.checkKickboardUse(use);
+        if (this.kickboardUse.equalsIgnoreCase(kickboardUse.getUse().trim())) {
             log.debug("킥보드 사용 정보가 변경되지 않음");
 
             return;
@@ -58,7 +58,6 @@ public class CommunicationServiceImpl implements CommunicationService {
     @Override
     public void sendKickboardLocation() throws Exception {
         final LocalDateTime dateTime = LocalDateTime.now();
-
         KickboardLocation kickboardLocation = agentService.checkKickboardLocation();
 
         try {
