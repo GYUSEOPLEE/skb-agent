@@ -2,12 +2,14 @@ package kr.co.skb.agent.deamon;
 
 import kr.co.skb.agent.util.KickboardUseUtil;
 import kr.co.skb.agent.util.KickboardUseWatchService;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+@Component
 @WebListener
 public class DeamonListener implements ServletContextListener, Runnable {
     private Thread StartThread;
