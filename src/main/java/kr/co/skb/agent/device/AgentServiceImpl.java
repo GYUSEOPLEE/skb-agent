@@ -18,11 +18,11 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
-    public KickboardLocation checkKickboardLocation() {
+    public KickboardLocation checkKickboardLocation(String[] location) throws NumberFormatException {
         return KickboardLocation.builder()
                 .dateTime(LocalDateTime.now())
-                .latitude(37.4420792)
-                .longitude(127.1363692)
+                .latitude(Double.parseDouble(location[0]))
+                .longitude(Double.parseDouble(location[1]))
                 .build();
     }
 }

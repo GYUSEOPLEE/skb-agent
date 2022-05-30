@@ -36,11 +36,10 @@ public class SendLocationScheduler {
         try {
             bufferedReader = new BufferedReader(new InputStreamReader(
                     new FileInputStream("/home/pi/Desktop/location.txt")));
+            String readData = bufferedReader.readLine().trim();
+            String[] location = readData.split(", ");
 
-            String location = bufferedReader.readLine().trim();
-
-            // TODO: 킥보드 위치 정보 송신
-
+            communicationService.sendKickboardLocation(location);
         } catch(Exception e) {
             log.error("킥보드 위치 정보 송신 실패");
         } finally {

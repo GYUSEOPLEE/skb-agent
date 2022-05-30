@@ -5,5 +5,5 @@ import kr.co.skb.agent.domain.KickboardUse;
 
 public interface AgentService {
     public KickboardUse checkKickboardUse(String use);
-    public KickboardLocation checkKickboardLocation();
+    public KickboardLocation checkKickboardLocation(String[] location);
 }

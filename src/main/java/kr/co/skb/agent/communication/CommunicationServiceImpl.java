@@ -56,9 +56,10 @@ public class CommunicationServiceImpl implements CommunicationService {
     }
 
     @Override
-    public void sendKickboardLocation() throws Exception {
+    public void sendKickboardLocation(String[] location) throws Exception {
         final LocalDateTime dateTime = LocalDateTime.now();
-        KickboardLocation kickboardLocation = agentService.checkKickboardLocation();
+        KickboardLocation kickboardLocation =
+                agentService.checkKickboardLocation(location);
 
         try {
             kickboardLocation.setDateTime(dateTime);
@@ -68,6 +69,5 @@ public class CommunicationServiceImpl implements CommunicationService {
             log.error(e.getMessage());
             throw e;
         }
-
     }
 }
