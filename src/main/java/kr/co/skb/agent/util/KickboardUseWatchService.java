@@ -3,6 +3,8 @@ package kr.co.skb.agent.util;
 import kr.co.skb.agent.communication.CommunicationService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -10,11 +12,13 @@ import java.io.InputStreamReader;
 import java.nio.file.*;
 import java.util.List;
 
+@Component
 @Log4j2
 public class KickboardUseWatchService {
     final static String file = "/home/pi/Desktop/kickboard/KickboardUse.txt";
     @Autowired private CommunicationService communicationService;
 
+    @Async
     public void kickboardStartSend(){
         WatchService watchService = null;
         StringBuffer buffer = new StringBuffer();

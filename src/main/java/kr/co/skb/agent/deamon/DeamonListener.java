@@ -1,7 +1,10 @@
 package kr.co.skb.agent.deamon;
 
+import kr.co.skb.agent.util.KickboardLocationUtil;
 import kr.co.skb.agent.util.KickboardUseUtil;
 import kr.co.skb.agent.util.KickboardUseWatchService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletContext;
@@ -11,29 +14,22 @@ import javax.servlet.annotation.WebListener;
 
 @Component
 @WebListener
+@RequiredArgsConstructor
 public class DeamonListener implements ServletContextListener, Runnable {
-    private Thread StartThread;
-    private Thread StartWatchThread;
+    private Thread thread;
     private boolean isShutdown = false;
     private ServletContext sc;
-    private KickboardUseUtil kickboardUseUtil;
-    private KickboardUseWatchService kickboardUseWatchService;
+    private final KickboardUseUtil kickboardUseUtil;
+    private final KickboardUseWatchService kickboardUseWatchService;
+    private final KickboardLocationUtil kickboardLocationUtil;
 
     public void startDaemon() {
-        if(StartThread == null) {
-            StartThread = new Thread(this, "Deamon StartThread");
+        if(thread == null) {
+            thread = new Thread(this, "Deamon StartThread");
         }
 
-        if(StartWatchThread == null) {
-            StartWatchThread = new Thread(this, "Deamon StartWatchThread");
-        }
-
-        if(!StartThread.isAlive()) {
-            StartThread.start();
-        }
-
-        if(!StartWatchThread.isAlive()) {
-            StartWatchThread.start();
+        if(!thread.isAlive()) {
+            thread.start();
         }
     }
 
@@ -41,9 +37,10 @@ public class DeamonListener implements ServletContextListener, Runnable {
     public void run() {
         Thread currentThread = Thread.currentThread();
 
-        while (!this.isShutdown) {
+        while (currentThread == thread && !this.isShutdown) {
             kickboardUseUtil.kickboardUse();
             kickboardUseWatchService.kickboardStartSend();
+            kickboardLocationUtil.kickboardLocation();
         }
     }
 
@@ -58,10 +55,8 @@ public class DeamonListener implements ServletContextListener, Runnable {
         this.isShutdown = true;
         try
         {
-            StartThread.join();
-            StartThread = null;
-            StartWatchThread.join();
-            StartWatchThread = null;
+            thread.join();
+            thread = null;
         }
         catch (InterruptedException ie)
         {

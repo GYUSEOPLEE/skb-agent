@@ -3,11 +3,16 @@ package kr.co.skb.agent.util;
 import com.pi4j.io.gpio.*;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 
+@Component
 public class KickboardUseUtil {
     final static File file = new File(File.separator + "home" + File.separator + "pi" + File.separator + "Desktop" + File.separator + "KickboardUse.txt");
+
+    @Async
     public void kickboardUse () {
         final GpioController controller = GpioFactory.getInstance();
         final GpioPinDigitalInput pin =
