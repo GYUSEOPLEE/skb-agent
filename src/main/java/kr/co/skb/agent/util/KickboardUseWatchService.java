@@ -1,13 +1,20 @@
 package kr.co.skb.agent.util;
 
+import kr.co.skb.agent.communication.CommunicationService;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.file.*;
 import java.util.List;
 
+@Log4j2
 public class KickboardUseWatchService {
     final static String file = "/home/pi/Desktop/kickboard/KickboardUse.txt";
+    @Autowired private CommunicationService communicationService;
+
     public void kickboardStartSend(){
         WatchService watchService = null;
         StringBuffer buffer = new StringBuffer();
@@ -25,7 +32,7 @@ public class KickboardUseWatchService {
                     WatchEvent.Kind<?> kind = event.kind();
                     Path context = (Path) event.context();
                     buffer = fileReader();
-                    //buffer.toString();을 보내줘야한다
+                    communicationService.sendKickboardUse(buffer.toString());
                 }
 
                 if (!watchKey.reset()) {
@@ -33,11 +40,14 @@ public class KickboardUseWatchService {
                 }
             }
         } catch (Exception e) {
+            log.error(e.getMessage());
         } finally {
             try {
-                watchService.close();
+                if (watchService != null) {
+                    watchService.close();
+                }
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
     }
@@ -57,8 +67,8 @@ public class KickboardUseWatchService {
                 if(bufferedReader != null){
                     bufferedReader.close();
                 }
-            }catch (Exception e){
-                e.printStackTrace();
+            } catch (Exception e){
+                log.error(e.getMessage());
             }
         }
 

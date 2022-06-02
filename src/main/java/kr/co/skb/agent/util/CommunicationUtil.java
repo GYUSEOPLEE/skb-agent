@@ -27,7 +27,7 @@ public class CommunicationUtil {
 
     // 킥보드 정보 송신
     public boolean request(@Valid final Kickboard kickboard)
-            throws IOException, ConstraintViolationException, JSONException {
+            throws IOException, JSONException, ConstraintViolationException {
         try {
             String requestUrl = "http://" + ip.getSystem() + url.getInfo();
             JSONObject code = new JSONObject(request(kickboard, requestUrl).string());
@@ -42,7 +42,7 @@ public class CommunicationUtil {
 
     // 킥보드 사용 정보 송신
     public boolean request(@Valid final KickboardUse kickboardUse)
-            throws IOException, ConstraintViolationException, JSONException {
+            throws IOException, JSONException, ConstraintViolationException {
         try {
             String requestUrl = "http://" + ip.getHelmet() + url.getUse();
             JSONObject code = new JSONObject(request(kickboardUse, requestUrl).string());
@@ -57,7 +57,7 @@ public class CommunicationUtil {
     
     // 킥보드 위치 정보 송신
     public boolean request(@Valid final KickboardLocation kickboardLocation)
-            throws IOException, ConstraintViolationException, JSONException {
+            throws IOException, JSONException, ConstraintViolationException {
         try {
             String requestUrl = "http://" + ip.getSystem() + url.getLocation();
             JSONObject code = new JSONObject(request(kickboardLocation, requestUrl).string());

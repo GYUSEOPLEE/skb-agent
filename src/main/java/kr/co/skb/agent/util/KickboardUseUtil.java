@@ -20,14 +20,14 @@ public class KickboardUseUtil {
                         GpioPinDigitalStateChangeEvent event) {
                     PinState pinState = event.getState();
                     FileReader fileReader = null;
-                    FileWriter fileWrite = null;
+                    FileWriter fileWriter = null;
                     if (pinState.isHigh()) {
                         try {
                             StringBuffer buffer = fileReader(fileReader);
                             String str = compareValues(buffer);
 
                             if(str != null) {
-                                fileWrite(fileWrite, str);
+                                fileWrite(fileWriter, str);
                             }
 
                         } catch (Exception e) {
@@ -36,8 +36,6 @@ public class KickboardUseUtil {
                     }
                 }
             });
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
