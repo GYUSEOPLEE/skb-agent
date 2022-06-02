@@ -15,7 +15,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>skb-agent</name>
     <description>skb-agent</description>
-
+    <packaging>jar</packaging>
     <properties>
         <java.version>11</java.version>
     </properties>
