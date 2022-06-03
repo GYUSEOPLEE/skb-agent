@@ -21,9 +21,9 @@ def decode(data):
     return point
     
 def writePoint(point):
-    fp = open(/home/pi/location.txt, 'W')
-    
-    fp.write(point[0], ', ' , point[1])
+    fp = open("/home/pi/location.txt", 'w')
+
+    fp.write("{}, {}".format(point[0], point[1]))
     
     fp.close()
 
@@ -34,5 +34,3 @@ def main():
     while True:
         data = ser.readline()
         parseGPS(data)
-    
-    
