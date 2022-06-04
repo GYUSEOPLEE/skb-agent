@@ -12,8 +12,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-@Component
-@WebListener
+//@Component
+//@WebListener
 @RequiredArgsConstructor
 public class DeamonListener implements ServletContextListener, Runnable {
     private Thread thread;

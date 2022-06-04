@@ -10,7 +10,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 public class SkbAgentApplication {
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(SkbAgentApplication.class);
-        application.addListeners(new ApplicationPidFileWriter());
+//        application.addListeners(new ApplicationPidFileWriter());
         application.run();
     }
 
