@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 
 @Log4j2
@@ -19,12 +21,13 @@ import java.time.LocalDateTime;
 public class AgentServiceImpl implements AgentService {
     @Autowired CommunicationService communicationService;
     @Value("${path-location}") private String locationPath;
-    final GpioController controller = GpioFactory.getInstance();
-    final GpioPinDigitalInput pin = controller.provisionDigitalInputPin(RaspiPin.GPIO_00, PinPullResistance.PULL_DOWN);
     private static boolean isUsing = false;
 
     @Override
     public void checkKickboardUse() {
+        final GpioController controller = GpioFactory.getInstance();
+        final GpioPinDigitalInput pin = controller.provisionDigitalInputPin(RaspiPin.GPIO_00, PinPullResistance.PULL_DOWN);
+
         pin.addListener(new GpioPinListenerDigital() {
             public void handleGpioPinDigitalStateChangeEvent(
                     GpioPinDigitalStateChangeEvent event) {
@@ -52,13 +55,11 @@ public class AgentServiceImpl implements AgentService {
 
         try {
             // TODO: 위치 정보 읽기
-//            bufferedReader = new BufferedReader(new InputStreamReader(
-//                    new FileInputStream(locationPath)));
-//            String readData = bufferedReader.readLine().trim();
-////            String readData = "37.4420792, 127.1363692";
-//            String[] location = readData.split(", ");
+            bufferedReader = new BufferedReader(new InputStreamReader(
+                    new FileInputStream(locationPath)));
+            String readData = bufferedReader.readLine().trim();
+            String[] location = readData.split(", ");
 
-            String[] location = {"37.000000", "127.000000"};
             KickboardLocation kickboardLocation = KickboardLocation.builder()
                     .dateTime(LocalDateTime.now())
                     .latitude(Double.parseDouble(location[0]))

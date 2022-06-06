@@ -1,6 +1,5 @@
 package kr.co.skb.agent.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,8 +17,7 @@ import java.time.LocalDateTime;
 @Component
 public class KickboardLocation implements Serializable {
     @Builder.Default
-    @NotBlank private String no = "KB202205050001";
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    @NotBlank private String kickboardNo = "KB202205050001";
     @NotNull private LocalDateTime dateTime;
     @NotNull private double latitude;
     @NotNull private double longitude;
