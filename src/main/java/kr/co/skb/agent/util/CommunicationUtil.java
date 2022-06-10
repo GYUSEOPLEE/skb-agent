@@ -2,17 +2,15 @@ package kr.co.skb.agent.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import kr.co.skb.agent.communication.CommunicationServiceImpl;
 import kr.co.skb.agent.domain.Kickboard;
 import kr.co.skb.agent.domain.KickboardLocation;
 import kr.co.skb.agent.domain.KickboardUse;
 import kr.co.skb.agent.domain.RequestInfo;
 import lombok.extern.log4j.Log4j2;
-import org.json.*;
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
@@ -35,7 +33,10 @@ public class CommunicationUtil {
         try {
             String requestUrl = "http://" + info.getProperty("systemIp") + url.getInfo();
             JSONObject code = new JSONObject(request(kickboard, requestUrl).string());
-            log.info(code.toString());
+
+            log.info("\n");
+            log.info("Info response : " + code.getString("message"));
+            log.info("\n");
 
             return "200".equals(code.getString("code"));
         } catch (ConstraintViolationException e) {
@@ -50,7 +51,9 @@ public class CommunicationUtil {
         try {
             String requestUrl = "http://" + info.getProperty("helmetIp") + url.getUse();
             JSONObject code = new JSONObject(request(kickboardUse, requestUrl).string());
-            log.info(code.toString());
+
+            log.info("use      : " + kickboardUse.getUse());
+            log.info("response : " + code.getString("message"));
 
             return "200".equals(code.getString("code"));
         } catch (ConstraintViolationException e) {
@@ -65,8 +68,12 @@ public class CommunicationUtil {
         try {
             String requestUrl = "http://" + info.getProperty("systemIp") + url.getLocation();
 
-            JSONObject code = new JSONObject(requestLoc(kickboardLocation, requestUrl).string());
-            log.info(code.toString());
+            JSONObject code = new JSONObject(request(kickboardLocation, requestUrl).string());
+
+            log.info("latitude  : " + kickboardLocation.getLatitude());
+            log.info("longitude : " + kickboardLocation.getLongitude());
+            log.info("response  : " + code.getString("message"));
+            log.info("\n");
 
             return "200".equals(code.getString("code"));
         } catch (ConstraintViolationException e) {
@@ -87,44 +94,6 @@ public class CommunicationUtil {
                 .url(requestUrl)
                 .post(body)
                 .build();
-
-        log.info(request.toString());
-        log.info(json);
-
-        Response response = client.newCall(request).execute();
-        ResponseBody responseBody = response.body();
-
-        return responseBody;
-    }
-
-    private ResponseBody requestLoc(KickboardLocation kikKickboardLocation, String requestUrl)
-            throws IOException {
-        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        OkHttpClient client = new OkHttpClient();
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-
-        Gson kickboardLoc = new Gson();
-
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("kickboardNo", kikKickboardLocation.getKickboardNo());
-        jsonObject.addProperty("latitude", kikKickboardLocation.getLatitude());
-        jsonObject.addProperty("longitude", kikKickboardLocation.getLongitude());
-        jsonObject.addProperty("dateTime", kikKickboardLocation.getDateTime().toString());
-
-        String json = kickboardLoc.toJson(jsonObject);
-
-        log.info(json);
-
-        RequestBody body = RequestBody.create(JSON, json);
-
-        Request request = new Request.Builder()
-                .url(requestUrl)
-                .post(body)
-                .build();
-
-        log.info(request.toString());
-        log.info(json);
 
         Response response = client.newCall(request).execute();
         ResponseBody responseBody = response.body();

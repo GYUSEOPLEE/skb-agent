@@ -3,7 +3,6 @@ package kr.co.skb.agent.util;
 import kr.co.skb.agent.communication.CommunicationService;
 import kr.co.skb.agent.device.AgentService;
 import lombok.extern.log4j.Log4j2;
-import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableAsync;

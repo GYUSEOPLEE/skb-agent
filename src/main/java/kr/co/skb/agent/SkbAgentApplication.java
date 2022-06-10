@@ -15,5 +15,4 @@ public class SkbAgentApplication {
         application.addListeners(new ApplicationPidFileWriter());
         application.run();
     }
-
 }

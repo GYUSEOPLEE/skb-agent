@@ -54,17 +54,17 @@ public class AgentServiceImpl implements AgentService {
         BufferedReader bufferedReader = null;
 
         try {
-            // TODO: 위치 정보 읽기
             bufferedReader = new BufferedReader(new InputStreamReader(
                     new FileInputStream(locationPath)));
             String readData = bufferedReader.readLine().trim();
             String[] location = readData.split(", ");
 
             KickboardLocation kickboardLocation = KickboardLocation.builder()
-                    .dateTime(LocalDateTime.now())
+                    .dateTime(LocalDateTime.now().withNano(0))
                     .latitude(Double.parseDouble(location[0]))
                     .longitude(Double.parseDouble(location[1]))
                     .build();
+
             communicationService.sendKickboardLocation(kickboardLocation);
         } catch(Exception e) {
             log.error("킥보드 위치 정보 송신 실패");

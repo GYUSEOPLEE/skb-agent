@@ -7,15 +7,7 @@ import kr.co.skb.agent.util.CommunicationUtil;
 import kr.co.skb.agent.util.KickboardUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Map;
-import java.util.Properties;
 
 @Log4j2
 @Service

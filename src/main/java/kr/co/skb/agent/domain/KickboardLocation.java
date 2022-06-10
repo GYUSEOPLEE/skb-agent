@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Component
 public class KickboardLocation implements Serializable {
     @Builder.Default
-    @NotBlank private String kickboardNo = "KB202205050001";
+    @NotBlank private String kickboardNo = "KB202204170010";
     @NotNull private LocalDateTime dateTime;
     @NotNull private double latitude;
     @NotNull private double longitude;

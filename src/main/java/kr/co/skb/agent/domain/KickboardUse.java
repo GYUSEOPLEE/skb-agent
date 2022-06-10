@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Component
 public class KickboardUse implements Serializable {
     @Builder.Default
-    @NotBlank private String no = "KB202205050001";
+    @NotBlank private String no = "KB202204170010";
     @Length(max = 1)
     @NotBlank private String use;
 }
