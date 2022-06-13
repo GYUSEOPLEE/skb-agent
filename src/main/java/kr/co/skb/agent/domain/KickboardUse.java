@@ -1,15 +1,16 @@
 package kr.co.skb.agent.domain;
 
-import lombok.*;
 import org.hibernate.validator.constraints.Length;
+
 import org.springframework.stereotype.Component;
+
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Data @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 @Component
 public class KickboardUse implements Serializable {
     @Builder.Default

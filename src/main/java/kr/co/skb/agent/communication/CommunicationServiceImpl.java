@@ -5,9 +5,11 @@ import kr.co.skb.agent.domain.KickboardLocation;
 import kr.co.skb.agent.domain.KickboardUse;
 import kr.co.skb.agent.util.CommunicationUtil;
 import kr.co.skb.agent.util.KickboardUtil;
+
+import org.springframework.stereotype.Service;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.stereotype.Service;
 
 @Log4j2
 @Service

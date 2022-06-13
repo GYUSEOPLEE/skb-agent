@@ -2,19 +2,23 @@ package kr.co.skb.agent.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import kr.co.skb.agent.domain.Kickboard;
 import kr.co.skb.agent.domain.KickboardLocation;
 import kr.co.skb.agent.domain.KickboardUse;
 import kr.co.skb.agent.domain.RequestInfo;
-import lombok.extern.log4j.Log4j2;
-import okhttp3.*;
-import org.json.JSONException;
-import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+
+import lombok.extern.log4j.Log4j2;
+
+import okhttp3.*;
 import java.io.IOException;
 import java.util.Properties;
 

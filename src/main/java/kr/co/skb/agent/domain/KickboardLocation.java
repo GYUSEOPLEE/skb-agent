@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotBlank;
@@ -12,8 +13,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 @Component
 public class KickboardLocation implements Serializable {
     @Builder.Default
