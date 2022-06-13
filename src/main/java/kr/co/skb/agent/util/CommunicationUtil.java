@@ -8,11 +8,10 @@ import kr.co.skb.agent.domain.KickboardUse;
 import kr.co.skb.agent.domain.RequestInfo;
 import lombok.extern.log4j.Log4j2;
 import okhttp3.*;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.annotation.Validated;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
@@ -21,24 +20,22 @@ import java.util.Properties;
 
 @Log4j2
 @Component
-@Validated
 public class CommunicationUtil {
     static Properties info = new Properties();
     @Autowired RequestInfo.Ip ip;
     @Autowired RequestInfo.Url url;
 
     // 킥보드 정보 송신
-    public boolean request(@Valid final Kickboard kickboard)
+    public void request(@Valid final Kickboard kickboard)
             throws IOException, JSONException, ConstraintViolationException {
         try {
             String requestUrl = "http://" + info.getProperty("systemIp") + url.getInfo();
             JSONObject code = new JSONObject(request(kickboard, requestUrl).string());
 
-            log.info("\n");
-            log.info("Info response : " + code.getString("message"));
-            log.info("\n");
+            log.info("url       : " + requestUrl);
+            log.info("response  : " + code.getString("message")+ "\n");
 
-            return "200".equals(code.getString("code"));
+            code.getString("code");
         } catch (ConstraintViolationException e) {
             log.error("킥보드 정보가 존재하지 않음");
             throw e;
@@ -50,10 +47,10 @@ public class CommunicationUtil {
             throws IOException, JSONException, ConstraintViolationException {
         try {
             String requestUrl = "http://" + info.getProperty("helmetIp") + url.getUse();
+
             JSONObject code = new JSONObject(request(kickboardUse, requestUrl).string());
 
-            log.info("use      : " + kickboardUse.getUse());
-            log.info("response : " + code.getString("message"));
+            log.info("response : " + code.getString("message") + "\n");
 
             return "200".equals(code.getString("code"));
         } catch (ConstraintViolationException e) {
@@ -61,19 +58,20 @@ public class CommunicationUtil {
             throw e;
         }
     }
-    
+
     // 킥보드 위치 정보 송신
     public boolean request(@Valid final KickboardLocation kickboardLocation)
             throws IOException, JSONException, ConstraintViolationException {
         try {
             String requestUrl = "http://" + info.getProperty("systemIp") + url.getLocation();
 
+            log.info("url       : " + requestUrl);
+
             JSONObject code = new JSONObject(request(kickboardLocation, requestUrl).string());
 
             log.info("latitude  : " + kickboardLocation.getLatitude());
             log.info("longitude : " + kickboardLocation.getLongitude());
-            log.info("response  : " + code.getString("message"));
-            log.info("\n");
+            log.info("response  : " + code.getString("message") + "\n");
 
             return "200".equals(code.getString("code"));
         } catch (ConstraintViolationException e) {
@@ -96,8 +94,7 @@ public class CommunicationUtil {
                 .build();
 
         Response response = client.newCall(request).execute();
-        ResponseBody responseBody = response.body();
 
-        return responseBody;
+        return response.body();
     }
 }

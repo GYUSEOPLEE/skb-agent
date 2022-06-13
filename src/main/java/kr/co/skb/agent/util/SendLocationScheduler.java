@@ -2,6 +2,7 @@ package kr.co.skb.agent.util;
 
 import kr.co.skb.agent.communication.CommunicationService;
 import kr.co.skb.agent.device.AgentService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,10 +18,11 @@ import java.io.InputStreamReader;
 @Log4j2
 @EnableAsync
 @Component
+@RequiredArgsConstructor
 public class SendLocationScheduler {
     @Value("${path-info}") private String infoPath;
-    @Autowired private CommunicationService communicationService;
-    @Autowired private AgentService agentService;
+    private final CommunicationService communicationService;
+    private final AgentService agentService;
 
     private boolean first = true;
 
@@ -36,14 +38,14 @@ public class SendLocationScheduler {
                 CommunicationUtil.info.put("systemIp", bufferedReader.readLine().trim().split("=")[1]);
                 CommunicationUtil.info.put("helmetIp", bufferedReader.readLine().trim().split("=")[1]);
             } catch (IOException e) {
-
+                log.info("File is not exist");
             }
 
             afterPropertiesSet();
             agentService.checkKickboardUse();
+        } else {
+            agentService.checkKickboardLocation();
         }
-
-        agentService.checkKickboardLocation();
     }
 
     public void afterPropertiesSet() throws Exception {

@@ -5,6 +5,7 @@ import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import kr.co.skb.agent.communication.CommunicationService;
 import kr.co.skb.agent.domain.KickboardLocation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,8 +19,9 @@ import java.time.LocalDateTime;
 
 @Log4j2
 @Service
+@RequiredArgsConstructor
 public class AgentServiceImpl implements AgentService {
-    @Autowired CommunicationService communicationService;
+    private final CommunicationService communicationService;
     @Value("${path-location}") private String locationPath;
     private static boolean isUsing = false;
 
@@ -36,9 +38,13 @@ public class AgentServiceImpl implements AgentService {
                     if (pinState.isHigh()) {
                         if (isUsing) {
                             isUsing = false;
+                            log.info("use      : N");
+
                             communicationService.sendKickboardUse("N");
                         } else {
                             isUsing = true;
+                            log.info("use      : Y");
+
                             communicationService.sendKickboardUse("Y");
                         }
                     }

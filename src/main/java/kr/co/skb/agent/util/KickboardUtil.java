@@ -11,7 +11,7 @@ public class KickboardUtil {
     @Autowired private Kickboard kickboard;
 
     public Kickboard getKickboard() {
-        log.info(this.kickboard);
+        log.info(this.kickboard + "\n");
 
         return this.kickboard;
     }
